@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.form-group{border: 0px;      
+}
+
+input[type=text]{border: none; 
+      font-size: 20px; 
+      border-bottom: solid 2px; 
+      text-shadow: 1px 1px 20px black;}
+
+input[type=email]{border: none; 
+  font-size: 20px; 
+  border-bottom: solid 2px; 
+  text-shadow: 2px 2px 20px black;}
+
+input[type=password]{border: none; 
+  font-size: 20px; 
+  border-bottom: solid 2px; 
+  text-shadow: 2px 2px 20px black;}
+
+input[type=number]{border: none; 
+  font-size: 20px; 
+  border-bottom: solid 2px; 
+  text-shadow:2px 2px 20px black;}
+
+.zmdi{ padding: 10px; vertical-align: -5px;}
+
+.navbar{ background-color:skyblue; }
+
+.imageBu{ width: 75%; height: 200%; }
+
+.card-header{ background-color: skyblue; text-shadow: teal;}
+
+.demo{ list-style-type: none;}
+
+/* .flight_date{
+  white-space: nowrap; 
+  width: 50px; 
+  border: 0px solid #000000;
+  overflow: hidden;
+  text-overflow: clip;
+} */
