@@ -103,11 +103,11 @@ const Login = () =>{
     return(
         <div>
             <Navbar/>
-            <p>Ready to signup</p>
+            {/* <p>Ready to signup</p> */}
             <h1>AirFare</h1>
             <section className='login'>
                 <div className='container mt-5'>
-                    <div className='login-form'>
+                    <div className='login-form' onLoad = {getcookiedata()}>
                     <h2>Login to start journey:</h2>
                     <form className='Login-form' id='login-form' method='POST'>
                         <div className='form-group'>
@@ -128,6 +128,11 @@ const Login = () =>{
                         </div>
                         {/* <h2>name is :{user.password}</h2> */}
                     
+                        <div className='form-group'>
+                            <label htmlFor='remember-me'></label>
+                            <input type='checkbox' id='remember-me' name='remember-me' 
+                            onClick={setcookie}></input>Remember me
+                        </div>
                     <div className='form-group form-button'>
                         <input type='submit' name='login' id='login' className='form-submit' value='login' onClick={PostData}></input>
                     </div>
@@ -146,6 +151,45 @@ const Login = () =>{
             </section>
         </div>
     )
+}
+function setcookie(){
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    document.cookie = 'UserEmail=' + email +  "; path=http://localhost:3000/login";
+    document.cookie = 'UserPassword=' + password +  "; path=http://localhost:3000/login";
+}
+
+function getcookiedata(){ 
+    console.log(document.cookie);
+    // console.log(document.cookie[11]);
+    console.log('cookis');
+    // getCookie();
+    // const userEmail = getCookieName()
+    // const userPassword = getCookiePwd()
+    console.log(document.getElementById('email'))
+    document.getElementById('email').value = getCookieName();
+    document.getElementById('password').value = getCookiePwd();
+}
+
+function getCookieName(){
+    var cookieValue = document.cookie;
+    var cookieArray = cookieValue.split(' ')
+    console.log(cookieArray)
+    var u1 = cookieArray[1].split('=')
+    var name = u1[1].split(';')[0]
+    console.log(name)
+    return (name)  
+}
+
+function getCookiePwd(){
+    var cookieValue = document.cookie;
+    var cookieArray = cookieValue.split(' ')
+    console.log(cookieArray)
+    var u2 = cookieArray[2].split('=')
+    var pwd = u2[1]
+    console.log(pwd)
+    return (pwd)  
 }
 
 export default Login;
