@@ -168,8 +168,8 @@ function getcookiedata(){
     // const userEmail = getCookieName()
     // const userPassword = getCookiePwd()
     console.log(document.getElementById('email'))
-    document.getElementById('email').value = getCookieName();
-    document.getElementById('password').value = getCookiePwd();
+    // document.getElementById('email').value = getCookieName();
+    // document.getElementById('password').value = getCookiePwd();
 }
 
 function getCookieName(){
