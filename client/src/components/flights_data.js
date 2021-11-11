@@ -64,12 +64,17 @@ const Flights_data=()=>{
                                     <div className ='flight_date col-6'>
                                         <i className="zmdi zmdi-calendar zmdi-hc-2x"></i> 
                                         {/* {data.flight_date.getFullYear()+'-' + (data.flight_date.getMonth()+1) + '-'+data.flight_date.getDate()} */}
-                                        {data.flight_date}
-                                        {/* date = new Date('2013-03-10T02:00:00Z'); */}
+                                        {/* {data.flight_date} */}
+                                        {dateDisplay(data.flight_date)}
+                                        
                                     </div>
                                     <div className = 'source-dest col-6'>
                                         <div className='time'> Time: {data.departure_time} </div> 
-                                        <div className='ticketCost'> Cost: {data.ticketCost} </div> 
+                                        <div className='ticketCost'> Cost: 
+                                            {/* <i class="fas fa-rupee-sign"></i> */}
+                                            <i class="fa fa-rupee"></i> 
+                                                {data.ticketCost} 
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -83,4 +88,11 @@ const Flights_data=()=>{
     )
 }
 
+function dateDisplay(x){
+//     var date = new Date('2016-08-25T00:00:00')
+// var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+// return(new Date(date.getTime() - userTimezoneOffset))
+    var date_needed = x.split("T")
+    return date_needed[0]
+}
 export default Flights_data
