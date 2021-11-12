@@ -64,12 +64,17 @@ const Flights_data2=()=>{
                                     <div className ='flight_date col-6'>
                                         <i className="zmdi zmdi-calendar zmdi-hc-2x"></i> 
                                         {/* {data.flight_date.getFullYear()+'-' + (data.flight_date.getMonth()+1) + '-'+data.flight_date.getDate()} */}
-                                        {data.flight_date}
+                                        {dateDisplay(data.flight_date)}
                                         {/* date = new Date('2013-03-10T02:00:00Z'); */}
                                     </div>
                                     <div className = 'source-dest col-6'>
                                         <div className='time'> Time: {data.departure_time} </div> 
-                                        <div className='ticketCost'> Cost: {data.ticketCost} </div> 
+                                        <div className='ticketCost'> Cost: <i className="fa fa-rupee"></i> {data.ticketCost} </div> 
+                                    </div>
+                                    <div>
+                                        <button>
+                                            <a className = 'delete' data-doc={data._id} onClick = {scheduleDelete}><i className='fa fa-trash'></i></a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -81,6 +86,35 @@ const Flights_data2=()=>{
         
         </div>
     )
+}
+
+
+function dateDisplay(x){
+    //     var date = new Date('2016-08-25T00:00:00')
+    // var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    // return(new Date(date.getTime() - userTimezoneOffset))
+        var date_needed = x.split("T")
+        return date_needed[0]
+    }
+
+    
+
+function scheduleDelete(){
+const trash = document.querySelector('a.delete');
+
+trash.addEventListener('click', async (e) =>{
+    const endpoint = `/schedule_flight/${trash.dataset.doc}`;
+    
+    await fetch(endpoint, {
+        method: 'DELETE'  })
+    .then((response)=> response.json())
+    .then((data) => {
+        console.log(data)
+        // history.push('/search_flights2')
+    })
+    // .then((data) => window.location.href = data.redirect)
+    .catch(err =>{console.log(err)});
+})
 }
 
 export default Flights_data2
