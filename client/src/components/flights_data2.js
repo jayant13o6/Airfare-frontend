@@ -9,6 +9,8 @@ const Flights_data2=()=>{
     const [userData, setUserData] = useState([]);
     const callpersonalPage = async() =>{
         try{ 
+
+            
             const res = await fetch('/schedule_flight', {
                 method: "GET",
                 headers: { 
