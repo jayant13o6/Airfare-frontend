@@ -1,9 +1,52 @@
 import React from 'react';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 
 const UserBar = () =>{
+    const history = useHistory()
+
+    const [user, setUser] = useState({ search:'' });
+    let name,value;
+    const SearchText = (e) =>{
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+        setUser({...user,[name]:value});
+    }
+    
+    const searchFlight = async(e) =>{
+
+        e.preventDefault();
+        const{search} = user;
+        console.log('data is:',user); // to see data input
+        
+        const res = await fetch('/searchDestination',{
+            method: 'POST',
+            headers:{"Content-Type": "application/json"},
+            mode: 'cors',
+            // data send to server 
+            body: JSON.stringify({search})
+            // body: JSON.stringify({user})
+        })
+        .then((res)=>{
+            const data = res.json(); //to check data
+            console.log('res:',res.json)
+            console.log(data)
+            if (res.status === 400 || !data){
+                window.alert('invalid data');
+                console.log('invslid data')
+            } 
+            else{
+                window.alert('valid register');
+                console.log('vslid data');
+                history.push('/search_flights')
+            }
+
+        })
+        .catch((err)=>console.log(err))
+    }
     return(
         // <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <nav className="navbar navbar-expand-lg navbar-dark ">
@@ -37,9 +80,12 @@ const UserBar = () =>{
                     <a className="nav-link" href="/logout" style={{color:'black'}}>Logout</a>    
                 </li>
               </ul>
-                <form className="d-flex">
-                    <input className="form-control" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                <form className="d-flex" method='POST'>
+                    <input className="form-control" type="search" 
+                    name="search" value= {user.search}
+                    onChange={SearchText}
+                    placeholder="Search your destination" aria-label="Search"/>
+                    <button className="btn btn-outline-success" type="submit" onClick = {searchFlight}>Search</button>
                 </form>
 </div>
 </div>
