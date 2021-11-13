@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import { useHistory } from 'react-router-dom';
 
 const Navbar = () =>{
+
+    
     return(
         // <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <nav className="navbar navbar-expand-lg navbar-dark ">
@@ -35,13 +37,19 @@ const Navbar = () =>{
                 </li>
 
               </ul>
-  <form className="d-flex">
-    <input className="form-control" type="search" placeholder="Search" aria-label="Search"/>
-    <button className="btn btn-outline-success" type="submit">Search</button>
-  </form>
+  {/* <form className="d-flex" method='POST'>
+    <input className="form-control" type="search" 
+                        id='search' name='search' 
+                        value= {user.search}
+                        onChange={SearchText}
+                        placeholder="Search" aria-label="Search"></input>
+    <button className="btn btn-outline-success" type="submit" onClick = {searchFlight} >Search</button>
+  </form> */}
 </div>
 </div>
 </nav>
     )
 }
+
+
 export default Navbar
