@@ -16,6 +16,7 @@ import AdminLogout from './components/adminlogout';
 import History from './components/history';
 import Booking from './components/latest_ticket';
 import Flights_data2 from './components/flights_data2.js';
+import PaymentGateway from './components/payment';
 
 function App() {
   return (
@@ -52,6 +53,8 @@ function App() {
       <Route path='/history'><History/></Route>
       
       <Route path='/Bookings'><Booking/></Route>
+
+      <Route path='/payment'><PaymentGateway/></Route>
     </div>
   );
 }

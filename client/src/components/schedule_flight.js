@@ -5,6 +5,7 @@ import AdminBar from './adminBar';
 import { useHistory } from 'react-router-dom';
 
 const Flights = () =>{
+    const today = new Date()
     const history = useHistory()
     const [user, setUser] = useState({
         flight_code:'', source:'', destination:'', flight_date:'', departure_time:'', arrival_time:'', ticketCost:''
@@ -22,6 +23,8 @@ const Flights = () =>{
         const{flight_code, source, destination, flight_date, departure_time, arrival_time, ticketCost} = user;
         console.log('data is:',user); // to see data input
         
+        if(flight_date<today.toISOString()){window.alert("Date is invalid")}
+        else{
         const res = await fetch('/schedule_flight',{
             method: 'POST',
             headers:{"Content-Type": "application/json"},
@@ -44,7 +47,7 @@ const Flights = () =>{
             }
             })
             .catch((err)=>{console.log(err)})
-}
+}}
     return(
         <div>
             <><AdminBar/></>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const Tickets = () =>{
+    var today = new Date();
     const history = useHistory();
     const [user, setUser] = useState({
         source:'', destination:'', departure_date:'', arrival_date:'', total_pass:'', email_id:''
@@ -22,6 +23,14 @@ const Tickets = () =>{
         const{source, destination, departure_date, arrival_date, total_pass, email_id} = user;
         console.log('data is:',user); // to see data input
         
+        if(departure_date<today.toISOString()){window.alert("Date is invalid")}
+        else{
+            
+            ////////// ----  Before  booking payment first ------//////
+           history.push('/payment') 
+
+
+
         const res = await fetch('/book_ticket',{
             method: 'POST',
             headers:{"Content-Type": "application/json"},
@@ -31,7 +40,7 @@ const Tickets = () =>{
             // body: JSON.stringify({user})
         })
         .then(async (res)=>{
-         const data = await res.json(); //to check data
+        const data = await res.json(); //to check data
         console.log('res:',res.json)
         console.log('request is:',data)
         if (res.status !== 200){
@@ -44,7 +53,7 @@ const Tickets = () =>{
             }
         })
         .catch((err)=>console.log(err))
-    }
+    }}
     return(
         <div>
             <UserBar/>
@@ -107,7 +116,8 @@ const Tickets = () =>{
                         {/* <h2>name is :{user.password}</h2> */}
                     
                     <div className='form-group form-button'>
-                        <input type='submit' name='booking' id='booking' className='form-submit' value='booking' onClick={PostData}></input>
+                        <input type='submit' name='booking' id='booking' 
+                        className='form-submit' value='booking' onClick={PostData}></input>
                     </div>
                     </form>
                     
