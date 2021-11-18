@@ -49,8 +49,7 @@ const Flights_data=()=>
         })
         .catch((err)=>console.log(err))
     }
-    //////////////////
-    // let city = data_for_filter.destination
+
     const callpersonalPage = async() =>{
         try{ 
             // if (!res.json()){

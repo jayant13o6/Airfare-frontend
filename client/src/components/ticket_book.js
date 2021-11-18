@@ -27,7 +27,7 @@ const Tickets = () =>{
         else{
             
             ////////// ----  Before  booking payment first ------//////
-           history.push('/payment') 
+        history.push('/payment') 
 
 
 
@@ -91,7 +91,7 @@ const Tickets = () =>{
                         {/* <h2>name is :{user.destination}</h2> */}
                         
                         <div className='form-group'>
-                            <label htmlFor='depature_date'>Departure date: </label>
+                            <label htmlFor='depature_date'></label>
                             <input type='date' id='departure_date' name='departure_date' 
                             value= {user.departure_date}
                             onChange={handleInput}
