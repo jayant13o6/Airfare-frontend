@@ -2,6 +2,7 @@ import Navbar from './navbar';
 import '../index.css';
 import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import { showAlert } from './alert';
 
 const Admin = () =>{
     const history = useHistory();
@@ -36,7 +37,7 @@ const Admin = () =>{
             console.log('res:',res.json)
             console.log(data)
             if (res.status === 400 || !data){
-                window.alert('invalid register');
+                showAlert('Wrong Credentials','danger')
                 console.log('invslid register')
             }   
              else{

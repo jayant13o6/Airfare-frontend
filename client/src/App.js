@@ -29,6 +29,8 @@ const reducer =(state,action)=>{
   }
 }
 
+
+
 function App() {
 
   // const [paymentFlag, dispatch] = useReducer(reducer, initialState)

@@ -1,7 +1,9 @@
 import Navbar from './navbar';
 import '../index.css';
 import React, {useState} from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+// import { Alert } from 'react-alert'
+import { showAlert } from './alert';
 import { useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -56,10 +58,11 @@ const Login = () =>{
         console.log('res:',res.json)
         console.log(data)
         if (res.status === 400 || !data){
-            window.alert('invalid credentials');
+            
+            showAlert('Wrong Credentials','warning')
             console.log('invslid credentials')
         } else{
-            window.alert('valid register');
+            showAlert("Valid Credentials", 'Success')
             console.log('vslid register');
             history.push('/indvUser')
             }
@@ -88,11 +91,10 @@ const Login = () =>{
                 console.log(res)
                 const data = res.json()
                 if (data.status === 404 || !data){
-                    window.alert('invalid register');
+                    showAlert('Wrong Credentials','warning')
                     console.log('invslid register')
                 } else{
-
-                    window.alert('valid register');
+                    // showAlert('Valid Credentials','success')
                     console.log('vslid register');
                     history.push('/indvUser');            
                 }
@@ -100,13 +102,17 @@ const Login = () =>{
             .catch((err)=>console.log(err))
     }
     const FailureGoogle = (response)=>{console.log(response)}
+
+
     return(
         <div>
             <Navbar/>
             {/* <p>Ready to signup</p> */}
+            
             <h1>AirFare</h1>
             <section className='login'>
                 <div className='container mt-5'>
+                {/* <div className='alert alert-danger'><strong>Wrong Credentials</strong></div> */}
                     <div className='login-form' onLoad = {getcookiedata()}>
                     <h2>Login to start journey:</h2>
                     <form className='Login-form' id='login-form' method='POST'>
@@ -152,6 +158,8 @@ const Login = () =>{
         </div>
     )
 }
+
+
 function setcookie(){
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;

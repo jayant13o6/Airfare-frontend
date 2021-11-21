@@ -54,3 +54,7 @@ input[type=number]{border: none;
   text-overflow: clip;
 } */
 .delete{ position: absolute; bottom: 0px ; right:0px;}
+
+#alerts{ position: absolute; top:10%; left:50%; 
+  transform: translateX(-50%); width:40%; 
+  text-align: center;}

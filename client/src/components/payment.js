@@ -2,6 +2,7 @@ import React, {useState, useContext} from "react";
 import UserBar from "./userBar";
 import { useHistory } from "react-router-dom";
 import {CountContext} from '../App.js';
+import { showAlert } from "./alert";
 
 const PaymentGateway = ({ticketData,paySuccess,setPaySuccess})=>{
 
@@ -44,10 +45,10 @@ const PaymentGateway = ({ticketData,paySuccess,setPaySuccess})=>{
             // console.log('res:',res.json)
             console.log('request is:',data)
             if (!data){
-                window.alert('Invalid entries. Please check schedule again');
+                showAlert('Invalid entries. Please check schedule again','warning');
                 console.log('invslid entry',res.status)
             } else{
-                window.alert('OTP sent successfully.');
+                showAlert('OTP sent successfully.','success');
                 console.log('vslid register',res.status());
                 console.log('otp value check:',user.otpCheck,user.otp);
                 // history.push('/payment')
@@ -60,7 +61,7 @@ const PaymentGateway = ({ticketData,paySuccess,setPaySuccess})=>{
         e.preventDefault();
         
         if (user.otp == user.otpCheck){
-            window.alert('Payment Sucessful')
+            showAlert('OTP Matched','success');
             // setPaySuccess(true)
             const res = await fetch('/book_ticket',{
                 method: 'POST',
@@ -72,10 +73,10 @@ const PaymentGateway = ({ticketData,paySuccess,setPaySuccess})=>{
             const data = await res.json(); //to check data
             console.log('res:',res.json,'request is:',data)
             if (res.status !== 200){
-                window.alert('Invalid entries. Please check schedule again');
+                showAlert('Invalid entries. Please check schedule again','danger');
                 console.log('invslid entry')
             } else{
-                window.alert('valid entry');
+                showAlert('valid entry','success');
                 console.log('vslid register');
                 history.push('/indvUser')
                 }

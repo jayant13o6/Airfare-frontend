@@ -3,6 +3,7 @@ import { useState } from "react";
 import React from 'react'
 import AdminBar from './adminBar';
 import { useHistory } from 'react-router-dom';
+import { showAlert } from './alert';
 
 const Flights = () =>{
     const today = new Date()
@@ -38,10 +39,10 @@ const Flights = () =>{
         
             console.log(data)
             if (data.status === 400 || !data){
-                window.alert('invalid register');
+                showAlert('invalid data input','danger');
                 console.log('invslid register')
             } else{
-                window.alert('valid register');
+                showAlert('valid data','success');
                 console.log('vslid register');
                 history.push('./adminUser')
             }

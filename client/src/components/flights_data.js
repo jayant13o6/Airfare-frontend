@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserBar from "./userBar";
 import { useHistory } from "react-router-dom";
 import '../index.css';
+import { showAlert } from "./alert";
 
 const Flights_data=()=>
 {
@@ -18,8 +19,8 @@ const Flights_data=()=>
             value = e.target.value;
             setUser({...user,[name]:value});
         }
-    const SearchDestination = async(e) =>{
 
+    const SearchDestination = async(e) =>{
         e.preventDefault();
         const{search} = user;
         console.log('data is:',user); // to see data input
@@ -38,7 +39,7 @@ const Flights_data=()=>
             console.log('res:',res.json)
             console.log('city value for filter:',data_for_filter)
             if (res.status === 400 || !data_for_filter){
-                window.alert('invalid data');
+                showAlert('Invalid Data','warning')
                 console.log('invslid data')
             } 
             else{
@@ -49,7 +50,8 @@ const Flights_data=()=>
         })
         .catch((err)=>console.log(err))
     }
-
+    //////////////////
+    // let city = data_for_filter.destination
     const callpersonalPage = async() =>{
         try{ 
             // if (!res.json()){

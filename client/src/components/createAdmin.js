@@ -2,6 +2,7 @@ import AdminBar from './adminBar';
 import React, {useState} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import '../index.css';
+import { showAlert } from './alert';
 
 const CreateAdmin = () =>{
     const history = useHistory();
@@ -50,7 +51,7 @@ const CreateAdmin = () =>{
             console.log(res)
             const data = res.json()
             if (data.status === 400 || !data){
-                window.alert('invalid register');
+                showAlert('Wrong Credentials','warning')
                 console.log('invslid register')
             } else{
                 window.alert('valid register');

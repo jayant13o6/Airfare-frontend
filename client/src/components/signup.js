@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import '../index.css';
 import axios from 'axios';
+import { showAlert } from './alert';
 import GoogleLogin from 'react-google-login';
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -58,14 +59,14 @@ const Signup = () =>{
             console.log(res)
             const data = res.json()
             if(res.status === 400 || !data){
-                window.alert('invalid register');
+                showAlert('invalid credentials','warning');
                 console.log('invslid register')
             } 
             else{
                 
                 if (password !== c_password){window.alert('password not matches')}
                 else{
-                window.alert('valid register');
+                showAlert('valid register','success');
                 console.log('vslid register');
                 history.push('/login');            
             }}
@@ -84,11 +85,11 @@ const Signup = () =>{
                 console.log(res)
                 const data = res.json()
                 if (data.status === 404 || !data){
-                    window.alert('invalid register');
+                    showAlert('invalid register','danger');
                     console.log('invslid register')
                 } else{
 
-                    window.alert('valid register');
+                    // window.alert('valid register');
                     console.log('vslid register');
                     history.push('/login');            
                 }
