@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 // import logo from './logo.svg';
+import React,{ useState, useReducer}  from 'react';
 import './App.css';
 import Home from './components/home';
 import Signup from './components/signup';
@@ -18,19 +19,40 @@ import Booking from './components/latest_ticket';
 import Flights_data2 from './components/flights_data2.js';
 import PaymentGateway from './components/payment';
 
+export const CountContext = React.createContext()
+////reducer define:
+const initialState = false   /// initial state is declared (initialstate is keyword)
+const reducer =(state,action)=>{
+  switch(action){
+    case '1':return true
+    case '0':return initialState
+  }
+}
+
 function App() {
+
+  // const [paymentFlag, dispatch] = useReducer(reducer, initialState)
+  // const [paySuccess, setPaySuccess] = useState(false)
+  const [ticketData, setTicketData] = useState({})
+  const [paySuccess, dispatch] = useReducer(reducer, initialState)
+    function withProps(Component, props) {
+        return function(matchProps) {
+          return <Component {...props} {...matchProps} />
+        }
+      }
   return (
+    <CountContext.Provider 
+          value={{ countState: ticketData, countDispatch: dispatch}}>
     <div className="App">
       
-    
-
       <Route exact path='/'> <Home/> </Route>
 
       <Route path='/login'><Login/></Route>
 
       <Route path='/signup'><Signup/></Route>
 
-      <Route path='/ticket_book'><Tickets/></Route>
+      <Route path='/ticket_book' component = {withProps(Tickets, { setTicketData: setTicketData, ticketData:ticketData })}/>
+      {/* <Route path='/ticket_book'><Tickets/></Route> */}
 
       <Route path='/schedule_flight'><Flights/></Route>
 
@@ -54,8 +76,10 @@ function App() {
       
       <Route path='/Bookings'><Booking/></Route>
 
-      <Route path='/payment'><PaymentGateway/></Route>
+      <Route path='/payment' component={withProps(PaymentGateway, { setTicketData: setTicketData, ticketData:ticketData })}/>
+      {/* <Route path='/payment'><PaymentGateway/></Route> */}
     </div>
+    </CountContext.Provider>
   );
 }
 

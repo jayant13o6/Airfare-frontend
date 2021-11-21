@@ -1,8 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import UserBar from "./userBar";
 import { useHistory } from "react-router-dom";
+import {CountContext} from '../App.js';
 
-const PaymentGateway = ()=>{
+const PaymentGateway = ({ticketData,paySuccess,setPaySuccess})=>{
+
+    const countContext = useContext(CountContext)
+    console.log('data inherit:',paySuccess,setPaySuccess);
+    console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch)
+    console.log('ticket data is :',ticketData);
     const history = useHistory()
     const [user, setUser] = useState({otp:'',otpCheck:''});
     const [userflag, setUserFlag] = useState(1);
@@ -50,13 +56,35 @@ const PaymentGateway = ()=>{
         .catch((err)=>{console.log(err)})
     }
     
-    const PaymentConfirm = (e) =>{
+    const PaymentConfirm = async(e) =>{
         e.preventDefault();
         
         if (user.otp == user.otpCheck){
             window.alert('Payment Sucessful')
-            history.push('/indvUser')
+            // setPaySuccess(true)
+            const res = await fetch('/book_ticket',{
+                method: 'POST',
+                headers:{"Content-Type": "application/json"},
+                mode: 'cors',
+                body: JSON.stringify(countContext.countState)
+            })
+            .then(async(res)=>{
+            const data = await res.json(); //to check data
+            console.log('res:',res.json,'request is:',data)
+            if (res.status !== 200){
+                window.alert('Invalid entries. Please check schedule again');
+                console.log('invslid entry')
+            } else{
+                window.alert('valid entry');
+                console.log('vslid register');
+                history.push('/indvUser')
+                }
+            })
+            .catch((err)=>console.log(err))
         }
+            // countContext.countDispatch('1')
+            // history.push('/ticket_book')
+        
         else{window.alert('wrong otp')}
         
     }

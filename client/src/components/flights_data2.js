@@ -71,11 +71,14 @@ const Flights_data2=()=>{
                                     </div>
                                     <div className = 'source-dest col-6'>
                                         <div className='time'> Time: {data.departure_time} </div> 
-                                        <div className='ticketCost'> Cost: <i className="fa fa-rupee"></i> {data.ticketCost} </div> 
+                                        <div className='ticketCost'> Cost: <i className="fa fa-rupee"></i> 
+                                            {data.ticketCost} 
+                                        </div> 
                                     </div>
                                     <div>
                                         <button>
-                                            <a className = 'delete' data-doc={data._id} onClick = {scheduleDelete}><i className='fa fa-trash'></i></a>
+                                            <a className = 'delete' data-doc={data._id} 
+                                            onClick = {scheduleDelete}><i className='fa fa-trash'></i></a>
                                         </button>
                                     </div>
                                 </div>
@@ -112,6 +115,7 @@ trash.addEventListener('click', async (e) =>{
     .then((response)=> response.json())
     .then((data) => {
         console.log(data)
+        window.alert('Refresh pls')
         // history.push('/search_flights2')
     })
     // .then((data) => window.location.href = data.redirect)

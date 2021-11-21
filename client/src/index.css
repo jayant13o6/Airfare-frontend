@@ -18,23 +18,24 @@ code {
 input[type=text]{border: none; 
       font-size: 20px; 
       border-bottom: solid 2px; 
-      text-shadow: 1px 1px 20px black;}
+      /* text-shadow: 1px 1px 20px black;} */
 
+}
 input[type=email]{border: none; 
   font-size: 20px; 
   border-bottom: solid 2px; 
-  text-shadow: 2px 2px 20px black;}
-
+  /* text-shadow: 2px 2px 20px black;} */
+}
 input[type=password]{border: none; 
   font-size: 20px; 
   border-bottom: solid 2px; 
-  text-shadow: 2px 2px 20px black;}
-
+  /* text-shadow: 2px 2px 20px black;} */
+}
 input[type=number]{border: none; 
   font-size: 20px; 
   border-bottom: solid 2px; 
-  text-shadow:2px 2px 20px black;}
-
+  /* text-shadow:2px 2px 20px black;} */
+}
 .zmdi{ padding: 10px; vertical-align: -5px;}
 
 .navbar{ background-color:skyblue; }

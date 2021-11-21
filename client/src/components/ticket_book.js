@@ -1,9 +1,14 @@
 import UserBar from "./userBar";
 import '../index.css';
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useHistory } from "react-router-dom";
+import {CountContext} from '../App.js';
 
-const Tickets = () =>{
+const Tickets = ({ticketData, setTicketData}) =>{
+
+    const countContext = useContext(CountContext)
+    // console.log('data inherit:',paySuccess,setPaySuccess);
+    console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch)
     var today = new Date();
     const history = useHistory();
     const [user, setUser] = useState({
@@ -18,10 +23,16 @@ const Tickets = () =>{
         setUser({...user,[name]:value});
     }
 
+    // const ticketDataTransfer = async(user) =>{
+    //     // e.preventDefault();
+    //     this.setTicketData({ticketData: user})
+    // }
     const PostData = async(e)=>{
+        console.log('Post data called')
         e.preventDefault();
         const{source, destination, departure_date, arrival_date, total_pass, email_id} = user;
-        console.log('data is:',user); // to see data input
+        setTicketData(user)
+        console.log('data is:',user,'@@@',ticketData); // to see data input
         
         if(departure_date<today.toISOString()){window.alert("Date is invalid")}
         else{
@@ -29,15 +40,15 @@ const Tickets = () =>{
             ////////// ----  Before  booking payment first ------//////
         history.push('/payment') 
 
-
+        if (countContext.countState===true){
 
         const res = await fetch('/book_ticket',{
             method: 'POST',
             headers:{"Content-Type": "application/json"},
             mode: 'cors',
             // data send to server 
-            body: JSON.stringify({source, destination, departure_date, arrival_date, total_pass,email_id})
-            // body: JSON.stringify({user})
+            // body: JSON.stringify({source, destination, departure_date, arrival_date, total_pass,email_id})
+            body: JSON.stringify({user})
         })
         .then(async (res)=>{
         const data = await res.json(); //to check data
@@ -54,6 +65,7 @@ const Tickets = () =>{
         })
         .catch((err)=>console.log(err))
     }}
+}
     return(
         <div>
             <UserBar/>
@@ -116,7 +128,7 @@ const Tickets = () =>{
                         {/* <h2>name is :{user.password}</h2> */}
                     
                     <div className='form-group form-button'>
-                        <input type='submit' name='booking' id='booking' 
+                        <input type='button' name='booking' id='booking' 
                         className='form-submit' value='booking' onClick={PostData}></input>
                     </div>
                     </form>
