@@ -3,6 +3,11 @@ import UserBar from "./userBar";
 import { useHistory } from "react-router-dom";
 import '../index.css';
 import { showAlert } from "./alert";
+import { compareDestinations } from "./regex";
+import { google } from "../../../../Airfare backend/server/node_modules/google-auth-library/build/src";
+<script async
+    tpye="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbpmkmQdvQl7lEWgTMmQmqBTWSd4zMkU&libraries=places&callback=activatePlacesSearch">
+</script>
 
 const Flights_data=()=>
 {
@@ -12,13 +17,15 @@ const Flights_data=()=>
 
     ////-----for filter----////
     const [user, setUser] = useState({ search:'' });
-        let name,value;
-        const SearchText = (e) =>{
-            console.log(e);
-            name = e.target.name;
-            value = e.target.value;
-            setUser({...user,[name]:value});
-        }
+    let name,value;
+
+    const SearchText = (e) =>{
+        e.preventDefault()
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+        setUser({...user,[name]:value});
+    }
 
     const SearchDestination = async(e) =>{
         e.preventDefault();
@@ -50,8 +57,12 @@ const Flights_data=()=>
         })
         .catch((err)=>console.log(err))
     }
-    //////////////////
-    // let city = data_for_filter.destination
+    
+    function activatePlacesSearch(){
+        var input = document.getElementById('searchDestination');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+    }
+
     const callpersonalPage = async() =>{
         try{ 
             // if (!res.json()){
@@ -87,33 +98,33 @@ const Flights_data=()=>
             <p className='mt-5'>Welcome</p>
             <h1>Upcoming Schedule</h1>
             {/* <p>{userData}</p> */}
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand">Flight Schedule</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{width: 750, alignContent:'center'}}>
+                <a className="navbar-brand">Flight Schedule</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Filter
                         </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item">Destination</a>
-                        <a class="dropdown-item">Date</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Something else here</a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a className="dropdown-item">Destination</a>
+                        <a className="dropdown-item">Date</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item">Something else here</a>
                     </div>
                     </li>
                     
                 </ul>
                 <form className="d-flex" method='POST'>
                     <input className="form-control" type="search" 
-                    name="search" value= {user.search}
-                    onChange={SearchText}
+                    name="search" value= {user.search} id='searchDestinantion'
+                    onInput={SearchText}
                     placeholder="Search your destination" aria-label="Search"/>
-                    <button className="btn btn-outline-success" type="submit" onClick = {SearchDestination}>Search</button>
+                    <button className="btn btn-outline-success" type="button" onClick = {SearchDestination}>Search</button>
                 </form>
 
             </div>
@@ -123,7 +134,8 @@ const Flights_data=()=>
                 {userData.map((data,index) =>(
                 <div className = 'container card' style={{width: 750}}>    
                     <li key={index}>
-                    {(user.search === (data.destination)) && (
+                    {/* {(user.search == (data.destination.slice(0,3))) && ( */}
+                        {(compareDestinations(data.destination,user.search)) && (
                         <div>
                             <div className = 'card-header'>
                                 <div className = 'row'>
@@ -157,6 +169,10 @@ const Flights_data=()=>
                                         </div> 
                                     </div>
                                 </div>
+                                <button>
+                                    <a className = 'bookButton' //data-doc={data._id} 
+                                    ><i className='fa fa-trash'></i></a>
+                                </button>
                             </div>
                         </div>
                      )} 
@@ -180,31 +196,31 @@ const Flights_data=()=>
             <p className='mt-5'>Welcome</p>
             <h1>Upcoming Schedule</h1>
             {/* <p>{userData}</p> */}
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand">Flight Schedule</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+            <nav className="navbar container navbar-expand-md navbar-light bg-light" style={{width: 750}}>
+                <a className="navbar-brand">Flight Schedule</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Filter
                         </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item">Destination</a>
-                        <a class="dropdown-item">Date</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Something else here</a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a className="dropdown-item">Destination</a>
+                        <a className="dropdown-item">Date</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item">Something else here</a>
                     </div>
                     </li>
                     
                 </ul>
                 <form className="d-flex" method='POST'>
                     <input className="form-control" type="search" 
-                    name="search" value= {user.search}
-                    onChange={SearchText}
+                    name="search" id='searchDestinantion' value= {user.search}
+                    onInput={SearchText}
                     placeholder="Search your destination" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit" onClick = {SearchDestination}>Search</button>
                 </form>
@@ -250,6 +266,11 @@ const Flights_data=()=>
                                         </div> 
                                     </div>
                                 </div>
+                                        {/* ticket button */}
+                                <button className="btn btn-outline-primary">
+                                    <a className = 'bookButton ' onClick={bookTicketButton} 
+                                    type = 'button' data-doc={data._id} >Book Tickets</a>
+                                </button>
                             </div>
                         </div>
                      {/* )}  */}
@@ -275,4 +296,16 @@ function dateDisplay(x){
     var date_needed = x.split("T")
     return date_needed[0]
 }
+
+function bookTicketButton(){
+    const trash = document.querySelector('a.bookButton');
+
+    trash.addEventListener('click', async (e) =>{
+        const endpoint = `/schedule_flight/${trash.dataset.doc}`;
+    })
+}
+
+{/* <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbpmkmQdvQl7lEWgTMmQmqBTWSd4zMkU&libraries=places&callback=activatePlacesSearch">
+</script> */}
 export default Flights_data

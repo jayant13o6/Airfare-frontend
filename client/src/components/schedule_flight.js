@@ -38,7 +38,7 @@ const Flights = () =>{
             const data = await res.json(); //to check data
         
             console.log(data)
-            if (data.status === 400 || !data){
+            if (res.status === 400 || !data){
                 showAlert('invalid data input','danger');
                 console.log('invslid register')
             } else{
@@ -93,6 +93,12 @@ const Flights = () =>{
                             placeholder='Enter the date' required ></input>
                         </div>
                         
+                        {/* <div className=" form-group input-group date">
+                            <input type="date" className="form-control" placeholder='Enter the date'/>
+                                <div className="input-group-addon">
+                                    <span className="glyphicon glyphicon-th"></span>
+                                </div>
+                        </div> */}
                         <div className='form-group'>
                             <label htmlFor='depature_time'> Departure Time</label>
                             <input type='time' id='departure_time' name='departure_time' 

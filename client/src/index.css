@@ -53,7 +53,7 @@ input[type=number]{border: none;
   overflow: hidden;
   text-overflow: clip;
 } */
-.delete{ position: absolute; bottom: 0px ; right:0px;}
+.delete{ position: absolute; bottom:10px ; right:10px;}
 
 #alerts{ position: absolute; top:10%; left:50%; 
   transform: translateX(-50%); width:40%; 

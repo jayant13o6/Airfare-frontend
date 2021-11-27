@@ -2,7 +2,6 @@ import Navbar from './navbar';
 import '../index.css';
 import React, {useState} from 'react';
 // import axios from 'axios';
-// import { Alert } from 'react-alert'
 import { showAlert } from './alert';
 import { useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
@@ -12,9 +11,8 @@ const Login = () =>{
     const history = useHistory();
     //destructure of object
     //syntax const[variable, method_toChangeValue_ofVar] = usestate(initialValue)
-    const [user, setUser] = useState({
-        email:'', password:''
-    });
+    const [user, setUser] = useState({ email:'', password:'' });
+    
     let name,value;
     const handleInput = (e) =>{
         console.log(e);

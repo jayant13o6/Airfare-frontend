@@ -69,18 +69,21 @@ const Flights_data2=()=>{
                                         {dateDisplay(data.flight_date)}
                                         {/* date = new Date('2013-03-10T02:00:00Z'); */}
                                     </div>
+                                    
                                     <div className = 'source-dest col-6'>
                                         <div className='time'> Time: {data.departure_time} </div> 
                                         <div className='ticketCost'> Cost: <i className="fa fa-rupee"></i> 
                                             {data.ticketCost} 
                                         </div> 
                                     </div>
+                            
                                     <div>
-                                        <button>
-                                            <a className = 'delete' data-doc={data._id} 
-                                            onClick = {scheduleDelete}><i className='fa fa-trash'></i></a>
+                                        <button className='delete'>
+                                            <a data-doc={data._id} onClick = {scheduleDelete}>
+                                            <i className='fa fa-trash' style={{color:'blue'}}/></a>
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
