@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom';
 // import logo from './logo.svg';
-import React,{ useState, useReducer}  from 'react';
+import React,{ useState, useReducer, useEffect}  from 'react';
 import './App.css';
 import Home from './components/home';
 import Signup from './components/signup';
@@ -18,7 +18,7 @@ import History from './components/history';
 import Booking from './components/latest_ticket';
 import Flights_data2 from './components/flights_data2.js';
 import PaymentGateway from './components/payment';
-
+import io from 'socket.io-client';
 export const CountContext = React.createContext()
 ////reducer define:
 const initialState = false   /// initial state is declared (initialstate is keyword)
@@ -32,6 +32,12 @@ const reducer =(state,action)=>{
 
 
 function App() {
+ 
+// useEffect(() =>{
+//         var socket = io('http://localhost:8000/');
+//         console.log(socket);
+//         socket.emit();
+//     },[]);
 
   // const [paymentFlag, dispatch] = useReducer(reducer, initialState)
   // const [paySuccess, setPaySuccess] = useState(false)
@@ -66,7 +72,7 @@ function App() {
 
       <Route path='/indvUser'><IndvUser/></Route>
 
-      <Route path='/search_flights'><Flights_data/></Route>
+      <Route path='/search_flights' component={withProps(Flights_data, { setTicketData: setTicketData, ticketData:ticketData })}/>
 
       <Route path='/search_flights2'><Flights_data2/></Route>
 

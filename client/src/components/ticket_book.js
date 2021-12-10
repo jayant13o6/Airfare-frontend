@@ -8,7 +8,7 @@ const Tickets = ({ticketData, setTicketData}) =>{
 
     const countContext = useContext(CountContext)
     // console.log('data inherit:',paySuccess,setPaySuccess);
-    console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch)
+    console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch);
     var today = new Date();
     const history = useHistory();
     const [user, setUser] = useState({
@@ -78,52 +78,52 @@ const Tickets = ({ticketData, setTicketData}) =>{
                     <form className='Login-form' id='ticket-form' method='POST'>
                         
                         <div className='form-group'>
-                            <label htmlFor='email_id'></label>
-                            <input type='email' id='email_id' name='email_id' 
+                            <input className="input-type" type='email' id='email_id' name='email_id' 
                             value= {user.email_id}
                             onChange={handleInput}
-                            placeholder='enter registered email id' required ></input>
+                            placeholder=' ' required ></input>
+                            <label className='form-label' htmlFor='email_id'>Your EmailId</label>
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor='source'></label>
-                            <input type='text' id='source' name='source' 
+                            <input className="input-type" type='text' id='source' name='source' 
                             value= {user.source}
                             onChange={handleInput}
-                            placeholder='City you currently At' required ></input>
+                            placeholder=' ' required ></input>
+                            <label className='form-label' htmlFor='source'>City you currently At</label>
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor='destination'></label>
-                            <input type='text' id='destination' name='destination' 
+                            <input className="input-type" type='text' id='destination' name='destination' 
                             value= {user.destination}
                             onChange={handleInput}
-                            placeholder='Your destination' required ></input>
+                            placeholder=' ' required ></input>
+                            <label className='form-label' htmlFor='destination'>Your destination</label>
                         </div>
                         {/* <h2>name is :{user.destination}</h2> */}
                         
                         <div className='form-group'>
-                            <label htmlFor='depature_date'></label>
-                            <input type='date' id='departure_date' name='departure_date' 
+                            <input className="input-type" type='date' id='departure_date' name='departure_date' 
                             value= {user.departure_date}
                             onChange={handleInput}
-                            placeholder='departure date' required />
+                            placeholder=' ' required />
+                            <label className='form-label' htmlFor='depature_date'>Departure Date</label>
                         </div>
                         
                         {/* <div className='form-group'>
                             <label htmlFor='arrival_date'></label>
-                            <input type='date' id='arrival_date' name='arrival_date' 
+                            <input className="input-type" type='date' id='arrival_date' name='arrival_date' 
                             value= {user.arrival_date}
                             onChange={handleInput}
                             placeholder='arrival date' required />
                         </div> */}
 
                         <div className='form-group'>
-                            <label htmlFor='total_pass'></label>
-                            <input type='number' id='total_pass' name='total_pass'
+                            <input className="input-type" type='number' id='total_pass' name='total_pass'
                                value= {user.total_pass}
                                onChange={handleInput}
-                               placeholder='Total no. of tickets' required ></input>
+                               placeholder=' ' required ></input>
+                               <label className='form-label' htmlFor='total_pass'>Total no. of tickets</label>
                         </div>
                         {/* <h2>name is :{user.password}</h2> */}
                     

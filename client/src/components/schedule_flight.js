@@ -24,7 +24,8 @@ const Flights = () =>{
         const{flight_code, source, destination, flight_date, departure_time, arrival_time, ticketCost} = user;
         console.log('data is:',user); // to see data input
         
-        if(flight_date<today.toISOString()){window.alert("Date is invalid")}
+        if(flight_date<today.toISOString())
+            {window.alert("Date is invalid")}
         else{
         const res = await fetch('/schedule_flight',{
             method: 'POST',
@@ -37,8 +38,8 @@ const Flights = () =>{
             .then(async (res)=>{
             const data = await res.json(); //to check data
         
-            console.log(data)
-            if (res.status === 400 || !data){
+            console.log('scheduled flight data:',data)
+            if (!data || res.status != 200){
                 showAlert('invalid data input','danger');
                 console.log('invslid register')
             } else{
@@ -46,8 +47,7 @@ const Flights = () =>{
                 console.log('vslid register');
                 history.push('./adminUser')
             }
-            })
-            .catch((err)=>{console.log(err)})
+            }).catch((err)=>{console.log(err)})
 }}
     return(
         <div>

@@ -1,6 +1,7 @@
 import AdminBar from "./adminBar";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import io from 'socket.io-client';
 
 
 const IndvAdmin = () =>{
@@ -32,7 +33,8 @@ const IndvAdmin = () =>{
     // }
 
     // useEffect(() =>{
-    //     callpersonalPage();
+    //     var socket = io('http://localhost:8000/');
+    //     console.log(socket);
     // },[]);
 
     return(

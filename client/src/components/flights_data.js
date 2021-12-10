@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import UserBar from "./userBar";
 import { useHistory } from "react-router-dom";
+import { CountContext } from "../App";
 import '../index.css';
 import { showAlert } from "./alert";
 import { compareDestinations } from "./regex";
@@ -9,9 +10,10 @@ import { google } from "../../../../Airfare backend/server/node_modules/google-a
     tpye="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbpmkmQdvQl7lEWgTMmQmqBTWSd4zMkU&libraries=places&callback=activatePlacesSearch">
 </script>
 
-const Flights_data=()=>
+const Flights_data=({ticketData, setTicketData})=>
 {
-
+    const countContext = useContext(CountContext);
+    console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch);
     const history = useHistory();
     const [userData, setUserData] = useState([]);
 
@@ -58,6 +60,32 @@ const Flights_data=()=>
         .catch((err)=>console.log(err))
     }
     
+    
+    const bookTicketButton = async(e)=>{
+        e.preventDefault();
+        console.log('buton ckicked');
+
+        const trash = document.querySelector('a.bookButton');
+        console.log(trash.dataset.doc,'id:')
+        // trash.addEventListener('click', async (e) =>{
+            console.log(trash.dataset.doc,'link:')
+            const endpoint = `/bookticket/${trash.dataset.doc}`;
+            console.log('link genrate');
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                // body: JSON.stringify(response
+                headers:{"Content-Type": "application/json"},
+                mode: 'cors',
+                // body: JSON.stringify('0')
+            }).then(async(res)=>{
+            const data = await res.json()
+                console.log('data in personal:',data)
+            setTicketData(data)
+            console.log('countcontext:' , countContext.countState,"00", countContext.countDispatch,'$$#','ticketData:',ticketData);
+            history.push('/payment');
+        }).catch((err)=>{console.log('error is therr')})    
+    }
+
     function activatePlacesSearch(){
         var input = document.getElementById('searchDestination');
         var autocomplete = new google.maps.places.Autocomplete(input);
@@ -98,27 +126,36 @@ const Flights_data=()=>
             <p className='mt-5'>Welcome</p>
             <h1>Upcoming Schedule</h1>
             {/* <p>{userData}</p> */}
-            <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{width: 750, alignContent:'center'}}>
+            {/* search bar syarted */}
+            <nav className="navbar container navbar-expand-lg navbar-light bg-light" id='smallBar'>
                 <a className="navbar-brand">Flight Schedule</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Filter
-                        </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a className="dropdown-item">Destination</a>
-                        <a className="dropdown-item">Date</a>
-                        <div className="dropdown-divider"></div>
-                        <a className="dropdown-item">Something else here</a>
-                    </div>
-                    </li>
-                    
-                </ul>
+                            </a>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a className="dropdown-item">Destination</a>
+                            <a className="dropdown-item">Date</a>
+                            <div className="dropdown-divider"></div>
+                            <a className="dropdown-item">Something else here</a>
+                        </div>
+                        </li>                  
+                    </ul>
+
+                {/* <form className="d-flex" method='POST'>
+                    <input className="form-control" type="search" 
+                    name="source" id='searchDestinantion'
+                    // onInput={SearchText}
+                    placeholder="Search your source" aria-label="Search"/>
+                    {/* <button className="btn btn-outline-success" type="button" onClick = {SearchDestination}>Search</button> */}
+                {/* </form> */} 
                 <form className="d-flex" method='POST'>
                     <input className="form-control" type="search" 
                     name="search" value= {user.search} id='searchDestinantion'
@@ -157,8 +194,7 @@ const Flights_data=()=>
                                         <i className="zmdi zmdi-calendar zmdi-hc-2x"></i> 
                                         {/* {data.flight_date.getFullYear()+'-' + (data.flight_date.getMonth()+1) + '-'+data.flight_date.getDate()} */}
                                         {/* {data.flight_date} */}
-                                        {dateDisplay(data.flight_date)}
-                                        
+                                        {dateDisplay(data.flight_date)}                           
                                     </div>
                                     <div className = 'source-dest col-6'>
                                         <div className='time'> Time: {data.departure_time} </div> 
@@ -169,9 +205,9 @@ const Flights_data=()=>
                                         </div> 
                                     </div>
                                 </div>
-                                <button>
-                                    <a className = 'bookButton' //data-doc={data._id} 
-                                    ><i className='fa fa-trash'></i></a>
+                                <button className="btn btn-outline-primary">
+                                    <a className = 'bookButton ' onClick={bookTicketButton} 
+                                    type = 'submit' data-doc={data._id} >Book Tickets</a>
                                 </button>
                             </div>
                         </div>
@@ -196,7 +232,7 @@ const Flights_data=()=>
             <p className='mt-5'>Welcome</p>
             <h1>Upcoming Schedule</h1>
             {/* <p>{userData}</p> */}
-            <nav className="navbar container navbar-expand-md navbar-light bg-light" style={{width: 750}}>
+            <nav className="navbar container navbar-expand-md navbar-light bg-light" id='smallBar' style={{width: 750}}>
                 <a className="navbar-brand">Flight Schedule</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -217,6 +253,13 @@ const Flights_data=()=>
                     </li>
                     
                 </ul>
+                {/* <form className="d-flex" method='POST'>
+                    <input className="form-control" type="search" 
+                    name="source" id='searchDestinantion'
+                    // onInput={SearchText}
+                    placeholder="Search your source" aria-label="Search"/>
+                    {/* <button className="btn btn-outline-success" type="button" onClick = {SearchDestination}>Search</button> */}
+                {/* </form> */} 
                 <form className="d-flex" method='POST'>
                     <input className="form-control" type="search" 
                     name="search" id='searchDestinantion' value= {user.search}
@@ -269,7 +312,7 @@ const Flights_data=()=>
                                         {/* ticket button */}
                                 <button className="btn btn-outline-primary">
                                     <a className = 'bookButton ' onClick={bookTicketButton} 
-                                    type = 'button' data-doc={data._id} >Book Tickets</a>
+                                    type = 'submit' data-doc={data._id} >Book Tickets</a>
                                 </button>
                             </div>
                         </div>
@@ -295,14 +338,6 @@ function dateDisplay(x){
 // return(new Date(date.getTime() - userTimezoneOffset))
     var date_needed = x.split("T")
     return date_needed[0]
-}
-
-function bookTicketButton(){
-    const trash = document.querySelector('a.bookButton');
-
-    trash.addEventListener('click', async (e) =>{
-        const endpoint = `/schedule_flight/${trash.dataset.doc}`;
-    })
 }
 
 {/* <script async

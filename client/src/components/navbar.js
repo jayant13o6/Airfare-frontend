@@ -21,7 +21,7 @@ const Navbar = () =>{
             {/* <ul className="navbar-nav me-auto mb-2 mb-lg-0"> */}
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <a className="nav-link active" href="/home" style={{color:'black'}}>Home</a>
+                    <a className="nav-link active" href="/" style={{color:'black'}}>Home</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="/admin" style={{color:'black'}}>Admin</a>
